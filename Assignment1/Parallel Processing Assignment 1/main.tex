@@ -1,0 +1,227 @@
+%%%%%%%%%%%%%%%%% DO NOT CHANGE HERE %%%%%%%%%%%%%%%%%%%% {
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{layout}
+\usepackage{subfig}
+\usepackage{changepage}
+\usepackage[showframe]{geometry}
+%\usepackage{layout}
+
+% \setlength{\voffset}{-0.5in}
+\setlength{\headsep}{1pt}
+
+% \titlespacing*{\section}{0pt}{0pt}{0pt}
+
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }
+
+%%%%%%%%%%%%%%%%%%%%%%%% CHANGE HERE %%%%%%%%%%%%%%%%%%%% {
+\newcommand\course{MTH 4082}
+% \newcommand\semester{}
+\newcommand\hwnumber{1}                 % <-- ASSIGNMENT #
+\newcommand\NetIDa{Michael James Hon}           % <-- YOUR NAME
+% \newcommand\NetIDb{200XXYYZZ}           % <-- STUDENT ID #
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }
+
+%%%%%%%%%%%%%%%%% DO NOT CHANGE HERE %%%%%%%%%%%%%%%%%%%% {
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\course \\\NetIDa}
+% \lhead{\NetIDa\\\NetIDb}                 
+\chead{\textbf{Assignment \hwnumber}}
+\rhead{01/28/2020}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }
+
+\begin{document}
+\section*{Code}\vspace{-15pt}
+% \lstinputlisting{Assignment1.c}
+\setlength{\leftmargin}{}%
+\begin{adjustwidth}{-25pt}{100pt}
+\begin{verbatim}
+#include <stdio.h>
+#include <math.h>
+#include <time.h> 
+
+int main(int argc, char *argv[]){
+    /* Variable declarations */
+    clock_t t;
+    double time,timesquareroot; // in seconds
+    int n;
+    double xMid, xDelta, pi= 0, pisqrt = 0,  area = 0;
+    
+    /* User input query */
+    printf("Enter number of rectangles: ");
+    scanf("%d", &n);                        //Enter number of rectangles
+
+    /* Width and Mid point calculations */
+    xDelta = (double)1/n;                   //Calculate the the width of the rectangles
+    xMid = xDelta/2;                        //Mid point of the rectangles
+
+    t = clock(); 
+    for(double i = 0; i < n; i++){          //loop to sum the area 
+        area = (4 / (1 + pow(xMid+(xDelta*i),2))); 
+        pi += xDelta*area;
+    }
+    t = clock() - t;
+    time = ((double)t)/CLOCKS_PER_SEC;
+
+    t = clock();
+    for(double i = 0; i < n; i++){          //loop to sum the area using square root
+        area = 4 *sqrt(1 - pow(xMid+(xDelta*i),2)); 
+        pisqrt += xDelta*area;
+    } 
+    t = clock() - t;
+    timesquareroot = ((double)t)/CLOCKS_PER_SEC;
+
+    printf("PI: %0.12f. Time to execute loop: %lf.\n",pi, time);
+    printf("PI Square root: %0.12f. Time to execute loop: %lf.\n",pisqrt, timesquareroot);
+
+    return 0;
+}
+\end{verbatim}
+\end{adjustwidth}
+
+\section*{Result}\\
+% \begin{table}[]
+\begin{tabular}{|l|l|l|}
+\hline
+N      & Pi         & Pi Square root \\ \hline
+2      & 3.162352941176   & 3.259367328636\\ \hline
+20     & 3.141800986893   & 3.145430588679\\ \hline
+200    & 3.141594736923   & 3.141714389345\\ \hline
+2000   & 3.141592674423   & 3.141592674423\\ \hline
+20000  & 3.141592653798   & 3.141592775366\\ \hline
+200000 & 3.141592653592   & 3.141592657441\\ \hline
+\end{tabular}
+% \end{table}
+\section*{Discussion}\vspace{-15pt}
+\subsection*{\normalsize What did you learn?}\vspace{-10pt}
+How to compute pi using integrals.
+% Showing that $\neg (p \rightarrow q)$ and  $p \wedge \neg q$ are logically equivalent.
+% \begin{align*}
+%   \neg (p \rightarrow q)   & \equiv \neg ( \neg p \vee q ) \\ % \\ makes a new line
+%                             & \equiv \neg ( \neg p \vee q ) \\
+%                             & \equiv \neg ( \neg p ) \wedge \neg ( q ) \\
+%                             & \equiv p \wedge \neg q
+% \end{align*}
+
+% Note that $\&$ is where the equations align.
+
+\subsection*{\normalsize How does accuracy depend on n?}\vspace{-10pt}
+Having more rectangles will have more accurate result since more it will cover more area than a smaller set of rectangles
+% Constructing the \emph{Truth Table} of $(p \rightarrow q) \wedge (\neg p \leftrightarrow q)$ in Table \ref{tb_truth_table}:
+
+% \begin{table}[h]    % [h] means to print the table here
+% \caption{Caption here. Leave it blank if you will not refer it.}
+% \label{tb_truth_table}
+%     \centering  % to center the table https://www.overleaf.com/project/5d757e7e591aa30001b65c17
+%     \begin{tabular}{cc|c|cc|c} % one 'c' for each column. It means centered. You can use 'l' or 'r' for left and right, respectively. '|' prints a line
+
+%         $p$ &   $q$ &   $\neg p$    &   $p \rightarrow q$  &   $\neg p \leftrightarrow q$  &   $(p \rightarrow q) \wedge (\neg p \leftrightarrow q)$ \\ \hline
+%         T   &   T   &   F           &   T                   &   F                           &   F   \\
+%         T   &   F   &   F           &   F                   &   T                           &   F   \\
+%         F   &   T   &   T           &   T                   &   T                           &   T   \\
+%         F   &   F   &   T           &   T                   &   F                           &   F   
+%     \end{tabular}
+% \end{table}
+
+
+\subsection*{\normalsize How does runtime depend on n?}\vspace{-10pt}
+If there are more rectangles then there will be more calculations to be done thus increases time due to having to do more calculations.
+
+\subsection*{\normalsize How might you divide the work up if the code is to run on multiple processors concurrently?  What coordination or communication would be required between the processors?}\vspace{-10pt}
+Splitting the work of the calculations by dividing the number of areas to the number of processors.Functional parallelism would be required since the data are not dependent on previous value in my code.
+
+
+% If the Problem is divided into items, use "enumerate"
+% \begin{enumerate}[a)]
+%     \item 
+%     ``There is a student in Gryffindor who has taken all elective classes.''
+    
+%     Solution:
+%         \begin{align*}
+%             \exists x \forall y \forall z ( H(x, \text{Gryffindor}) \wedge P(x,y) )
+%         \end{align*}
+%     where 
+%     \begin{itemize}
+%         \item[] $H(x,z)$ is ``$x$ is of $z$ house''
+%         \item[] $P(x, y)$ is ``$x$ has taken $y$,''
+%         \item[] the domain for $x$ consists of all students in Hogwarts
+%         \item[] the domain for $y$ consists of all elective classes,
+%         \item[] and the domain for $z$ consists of all Hogwarts houses.
+%     \end{itemize}
+    
+%     \item 
+%     Give a direct proof of the theorem ``If $n$ is an odd integer, then $n^2$ is odd.''
+    
+%     Solution:
+%     \begin{enumerate}[1.]
+%         \item 
+%         \begin{align*}
+%             \forall n(P(n) \rightarrow Q(n)),
+%         \end{align*}
+%       where
+%       \begin{itemize}
+%             \item[] $P(n)$ is ``$n$ is an odd integer'' and
+%             \item[] $Q(n)$ is ``$n^2$ is odd.''
+%       \end{itemize}
+        
+%         \item 
+%         Assume $P(n)$  is true.
+        
+%         \item 
+%         By definition, an odd integer is $n = 2k + 1$, 
+%         where $k$ is some integer.
+
+%         \item
+%         \begin{align*}
+%             n^2 &= (2k + 1)^2 \\
+%                 &= 4k^2 + 4k + 1 \\
+%                 &=  2(2k^2 + 2k) + 1
+%         \end{align*}
+        
+%         \item 
+%         $\therefore n^2$ is an odd integer. $\qed$
+%     \end{enumerate}
+    
+    
+
+%     \item Let $A = \{1,2,3\}$ and $B = \{1,2,3,\{1,2,3\}\}$:
+    
+%     Then, $A \in B$ and $A \subseteq B$.
+    
+%     \item Let $A = \{1, 3, 5\}$, $B = \{1,2,3,\}$, and universe $U = \{1,2,3,4,5\}$:
+%     \begin{align*}
+%         A \cup B    &= \{1,2,3,5\}, \\
+%         A \cap B    &= \{1,3\}, \\
+%         A - B       &= \{5\},\\
+%         \bar{A}     &= \{2,4\},\\
+%         A - A       &= \emptyset .
+%     \end{align*}
+
+\end{enumerate}
+
+\end{document}
